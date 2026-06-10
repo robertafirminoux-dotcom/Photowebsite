@@ -4,50 +4,52 @@
 
 :root {
   --font-size: 16px;
-  --background: #faf6ef;
-  --foreground: #2c3e50;
+  --background: #fffdf5;
+  --foreground: #2b3954;
   --card: #ffffff;
-  --card-foreground: #2c3e50;
+  --card-foreground: #2b3954;
   --popover: #ffffff;
-  --popover-foreground: #2c3e50;
-  --primary: #3d6a99;
+  --popover-foreground: #2b3954;
+  --primary: #364c84;
   --primary-foreground: #ffffff;
-  --secondary: #e7eff7;
-  --secondary-foreground: #3d6a99;
-  --muted: #f1ebe0;
-  --muted-foreground: #6e7b8a;
-  --accent: #dfeaf4;
-  --accent-foreground: #2c3e50;
+  --secondary: #e6ecfc;
+  --secondary-foreground: #364c84;
+  --muted: #f3f3e9;
+  --muted-foreground: #5d6a87;
+  --accent: #e4ebfd;
+  --accent-foreground: #2b3954;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
-  --border: rgba(61, 106, 153, 0.16);
+  --border: rgba(54, 76, 132, 0.14);
   --input: transparent;
   --input-background: #ffffff;
-  --switch-background: #cbd6e2;
+  --switch-background: #c6d2ee;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #8fb0cf;
-  --chart-1: #3d6a99;
-  --chart-2: #8fb0cf;
-  --chart-3: #d8c7ab;
-  --chart-4: #f1ebe0;
-  --chart-5: #2c3e50;
+  --ring: #95b1ee;
+  --chart-1: #364c84;
+  --chart-2: #95b1ee;
+  --chart-3: #e7f1a8;
+  --chart-4: #fffdf5;
+  --chart-5: #2b3954;
   --radius: 1rem;
-  --sidebar: #faf6ef;
-  --sidebar-foreground: #2c3e50;
-  --sidebar-primary: #3d6a99;
+  --sidebar: #fffdf5;
+  --sidebar-foreground: #2b3954;
+  --sidebar-primary: #364c84;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e7eff7;
-  --sidebar-accent-foreground: #2c3e50;
-  --sidebar-border: rgba(61, 106, 153, 0.16);
-  --sidebar-ring: #8fb0cf;
+  --sidebar-accent: #e6ecfc;
+  --sidebar-accent-foreground: #2b3954;
+  --sidebar-border: rgba(54, 76, 132, 0.14);
+  --sidebar-ring: #95b1ee;
 
-  /* Palette extras */
-  --beige: #f1e9db;
-  --beige-deep: #e7dcc8;
-  --blue-soft: #c9dcee;
-  --blue-mist: #eef4fa;
-  --blue-deep: #2f5478;
+  /* Palette extras — #95B1EE · #FFFDF5 · #E7F1A8 · #364C84 */
+  --beige: #f9f7ea;
+  --beige-deep: #f1f0dc;
+  --blue-soft: #bccdf3;
+  --blue-mist: #eef2fe;
+  --blue-deep: #364c84;
+  --leaf: #e7f1a8;
+  --leaf-soft: #f3f8d4;
 }
 
 @theme inline {
@@ -94,6 +96,8 @@
   --color-blue-soft: var(--blue-soft);
   --color-blue-mist: var(--blue-mist);
   --color-blue-deep: var(--blue-deep);
+  --color-leaf: var(--leaf);
+  --color-leaf-soft: var(--leaf-soft);
   --font-sans: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
 }

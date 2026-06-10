@@ -24,7 +24,7 @@ export function ContentHub() {
     },
     {
       icon: PenLine,
-      tint: "bg-beige text-blue-deep",
+      tint: "bg-leaf/60 text-blue-deep",
       iconTint: "bg-card text-primary",
       textTint: "text-muted-foreground",
       ...t.content.medium,

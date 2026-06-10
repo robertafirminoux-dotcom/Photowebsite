@@ -112,7 +112,7 @@ export function Booking() {
   const stepIndex = steps.findIndex((s) => s.key === step);
 
   return (
-    <section id="booking" className="bg-beige/60 py-20 scroll-mt-16">
+    <section id="booking" className="bg-blue-mist/60 py-20 scroll-mt-16">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold tracking-widest text-primary uppercase">

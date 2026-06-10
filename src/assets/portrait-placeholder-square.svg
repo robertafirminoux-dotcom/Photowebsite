@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f1e9db"/>
-      <stop offset="50%" stop-color="#e7dcc8"/>
-      <stop offset="100%" stop-color="#c9dcee"/>
+      <stop offset="0%" stop-color="#f3f8d4"/>
+      <stop offset="50%" stop-color="#e7f1a8"/>
+      <stop offset="100%" stop-color="#bccdf3"/>
     </linearGradient>
   </defs>
   <rect width="900" height="900" fill="url(#bg)"/>
-  <circle cx="450" cy="360" r="115" fill="#ffffff" opacity="0.85"/>
-  <path d="M450 505c-145 0-230 85-230 220v175h460V725c0-135-85-220-230-220z" fill="#ffffff" opacity="0.85"/>
-  <circle cx="450" cy="360" r="115" fill="#3d6a99" opacity="0.12"/>
-  <path d="M450 505c-145 0-230 85-230 220v175h460V725c0-135-85-220-230-220z" fill="#3d6a99" opacity="0.12"/>
-  <text x="450" y="850" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#2f5478" opacity="0.65">Sua foto aqui · Your photo here</text>
+  <circle cx="450" cy="360" r="115" fill="#ffffff" opacity="0.88"/>
+  <path d="M450 505c-145 0-230 85-230 220v175h460V725c0-135-85-220-230-220z" fill="#ffffff" opacity="0.88"/>
+  <circle cx="450" cy="360" r="115" fill="#364c84" opacity="0.12"/>
+  <path d="M450 505c-145 0-230 85-230 220v175h460V725c0-135-85-220-230-220z" fill="#364c84" opacity="0.12"/>
+  <text x="450" y="850" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#364c84" opacity="0.65">Sua foto aqui · Your photo here</text>
 </svg>

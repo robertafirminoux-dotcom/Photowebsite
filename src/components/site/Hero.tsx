@@ -9,8 +9,8 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="pointer-events-none absolute -top-24 -right-24 size-96 rounded-full bg-blue-soft/50 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 -left-24 size-96 rounded-full bg-beige-deep/60 blur-3xl" />
+      <div className="pointer-events-none absolute -top-24 -right-24 size-96 rounded-full bg-blue-soft/40 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 -left-24 size-96 rounded-full bg-leaf/40 blur-3xl" />
 
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-24">
         <div className="relative z-10">
@@ -56,7 +56,7 @@ export function Hero() {
 
         <div className="relative z-10 mx-auto w-full max-w-md lg:max-w-none">
           <div className="relative">
-            <div className="absolute -inset-4 rotate-2 rounded-[2rem] bg-beige" />
+            <div className="absolute -inset-4 rotate-2 rounded-[2rem] bg-leaf/60" />
             <div className="absolute -inset-4 -rotate-2 rounded-[2rem] bg-blue-soft/60" />
             <ImageWithFallback
               src={SITE.heroImage}

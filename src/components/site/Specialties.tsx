@@ -3,12 +3,12 @@ import { useLanguage } from "../../i18n/LanguageContext";
 
 const ICONS = [HeartHandshake, Plane, Home, Sparkles, Coins, Flower2];
 const TINTS = [
-  "bg-blue-soft/60",
-  "bg-beige",
+  "bg-blue-soft/50",
+  "bg-leaf/50",
   "bg-blue-mist",
-  "bg-beige-deep/50",
+  "bg-leaf-soft",
   "bg-secondary",
-  "bg-blue-soft/40",
+  "bg-blue-soft/30",
 ];
 
 export function Specialties() {

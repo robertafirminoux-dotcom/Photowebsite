@@ -7,7 +7,7 @@ export function About() {
   const { t } = useLanguage();
 
   return (
-    <section id="about" className="bg-beige/60 py-20 scroll-mt-16">
+    <section id="about" className="bg-blue-mist/60 py-20 scroll-mt-16">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
         <div className="relative mx-auto w-full max-w-md">
           <div className="absolute -inset-3 rounded-[2rem] bg-blue-soft/50" />
