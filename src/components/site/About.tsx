@@ -5,17 +5,39 @@ import { SITE } from "../../site.config";
 
 export function About() {
   const { t } = useLanguage();
+  const firstName = SITE.name.split(" ")[0];
 
   return (
     <section id="about" className="bg-blue-mist/60 py-20 scroll-mt-16">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
+        {/* Editorial portrait with magazine-style typography overlay */}
         <div className="relative mx-auto w-full max-w-md">
-          <div className="absolute -inset-3 rounded-[2rem] bg-blue-soft/50" />
-          <ImageWithFallback
-            src={SITE.aboutImage}
-            alt="Gabrielle Firmino"
-            className="relative aspect-square w-full rounded-[1.75rem] object-cover shadow-lg"
-          />
+          <div className="absolute -inset-3 rotate-2 rounded-[2.25rem] bg-blue-soft/50" />
+          <div className="relative overflow-hidden rounded-[2rem] shadow-xl">
+            <ImageWithFallback
+              src={SITE.aboutImage}
+              alt={SITE.name}
+              className="aspect-[4/5] w-full object-cover object-top"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-deep/30 via-transparent to-blue-deep/40" />
+
+            <div className="absolute inset-x-0 top-7 px-6 text-center text-white">
+              <p className="font-display text-lg italic underline decoration-white/70 decoration-1 underline-offset-[6px] drop-shadow-md sm:text-xl">
+                {t.about.photoIntro}
+              </p>
+              <p className="-mt-1 font-display text-6xl font-semibold tracking-tight drop-shadow-lg sm:text-7xl">
+                {firstName}
+              </p>
+            </div>
+
+            <span className="absolute top-[55%] right-4 -rotate-3 rounded-2xl bg-white px-4 py-2.5 text-sm font-semibold text-blue-deep shadow-lg sm:right-6">
+              {t.about.photoSticker}
+            </span>
+
+            <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm tracking-[0.2em] text-white/90 uppercase drop-shadow">
+              {SITE.name}
+            </p>
+          </div>
         </div>
 
         <div>

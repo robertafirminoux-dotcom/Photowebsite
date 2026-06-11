@@ -1,6 +1,5 @@
 import { ArrowRight, Video } from "lucide-react";
 import { Button } from "../ui/button";
-import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { SITE } from "../../site.config";
 
@@ -54,15 +53,19 @@ export function Hero() {
           <p className="mt-4 text-sm text-muted-foreground">{t.hero.locationNote}</p>
         </div>
 
-        <div className="relative z-10 mx-auto w-full max-w-md lg:max-w-none">
-          <div className="relative">
-            <div className="absolute -inset-4 rotate-2 rounded-[2rem] bg-leaf/60" />
-            <div className="absolute -inset-4 -rotate-2 rounded-[2rem] bg-blue-soft/60" />
-            <ImageWithFallback
+        <div className="relative z-10 mx-auto w-full max-w-md lg:max-w-lg">
+          {/* Cut-out portrait rising out of an arch shape */}
+          <div className="relative overflow-hidden rounded-b-[2.5rem]">
+            <div className="absolute inset-x-0 top-14 bottom-0 rounded-t-full bg-gradient-to-b from-leaf/80 via-blue-soft/70 to-blue-mist" />
+            <img
               src={SITE.heroImage}
               alt="Gabrielle Firmino"
-              className="relative aspect-[4/5] w-full rounded-[1.75rem] object-cover shadow-xl"
+              className="relative mx-auto w-[92%] drop-shadow-[0_24px_40px_rgba(43,58,103,0.28)]"
             />
+          </div>
+          <div className="absolute bottom-6 -left-2 rounded-2xl bg-card/95 px-5 py-3 shadow-lg backdrop-blur sm:-left-6">
+            <p className="font-display text-base font-semibold text-blue-deep">{SITE.name}</p>
+            <p className="text-xs text-muted-foreground">{t.hero.role}</p>
           </div>
         </div>
       </div>
