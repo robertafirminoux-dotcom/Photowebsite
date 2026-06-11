@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { Globe, Menu, X } from "lucide-react";
 import { Button } from "../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { LANGS } from "../../i18n/translations";
 import { SITE } from "../../site.config";
@@ -24,7 +18,27 @@ export function Navbar() {
     { href: "#faq", label: t.nav.faq },
   ];
 
-  const current = LANGS.find((l) => l.code === lang)!;
+  const langSwitcher = (
+    <div className="flex items-center gap-1 rounded-full border border-border bg-card p-1">
+      <Globe className="ml-1.5 size-4 text-muted-foreground" />
+      {LANGS.map((l) => (
+        <button
+          key={l.code}
+          type="button"
+          onClick={() => setLang(l.code)}
+          aria-pressed={l.code === lang}
+          title={l.label}
+          className={`rounded-full px-2.5 py-1 text-xs font-semibold uppercase transition-colors ${
+            l.code === lang
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:text-primary"
+          }`}
+        >
+          {l.code}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -46,25 +60,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="gap-1.5 rounded-full">
-                <Globe className="size-4" />
-                <span className="uppercase">{current.code}</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {LANGS.map((l) => (
-                <DropdownMenuItem
-                  key={l.code}
-                  onClick={() => setLang(l.code)}
-                  className={l.code === lang ? "bg-accent" : ""}
-                >
-                  <span className="mr-1">{l.flag}</span> {l.label}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {langSwitcher}
 
           <Button asChild size="sm" className="hidden rounded-full px-5 sm:inline-flex">
             <a href="#booking">{t.nav.bookCta}</a>

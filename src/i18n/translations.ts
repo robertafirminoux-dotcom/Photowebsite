@@ -123,6 +123,7 @@ interface Translation {
     country: string;
     countryPlaceholder: string;
     sessionLanguage: string;
+    brLimitNote: string;
     payment: string;
     pixTitle: string;
     pixInstructions: string;
@@ -308,7 +309,7 @@ export const translations: Record<Lang, Translation> = {
         },
         {
           q: "How do online sessions work?",
-          a: "Sessions last 50 minutes and happen by video call, in English, Portuguese or Spanish. You only need a quiet place and a stable internet connection. After booking, you receive the video call link by email. Online analysis is just as deep and welcoming as in person — wherever you are in the world.",
+          a: "Sessions happen by video call, in English, Portuguese or Spanish. You only need a quiet place and a stable internet connection. After booking, you receive the video call link by email. Online analysis is just as deep and welcoming as in person — wherever you are in the world.",
         },
         {
           q: "How often should I have sessions?",
@@ -316,7 +317,11 @@ export const translations: Record<Lang, Translation> = {
         },
         {
           q: "Which payment methods do you accept?",
-          a: "In Brazil, payment is in reais (R$ 250 per session) via PIX. In Europe and all other countries, payment is in euros (€88 per session) via international bank transfer (IBAN). The website automatically shows the currency and payment method for your region, and you'll find all the details at checkout.",
+          a: "In Brazil, payment is made via PIX. In Europe and all other countries, payment is made by international bank transfer (IBAN). The currency you pay in depends on the country where you live: reais for residents of Brazil, euros for everyone else. The website shows the right option automatically, and you'll find all the details at checkout.",
+        },
+        {
+          q: "I need an urgent session. What should I do?",
+          a: "Write to me directly at {email} and tell me briefly what is going on. I will personally find a time for you as soon as possible — even outside the calendar shown on this website.",
         },
         {
           q: "How do I know if psychoanalysis is for me?",
@@ -334,8 +339,8 @@ export const translations: Record<Lang, Translation> = {
       stepPayment: "Payment",
       single: {
         title: "Single session",
-        description: "One 50-minute online session, at your pace.",
-        features: ["50-minute session", "Online via video call", "EN · PT · ES"],
+        description: "One online session, at your pace.",
+        features: ["Online via video call", "EN · PT · ES", "You choose the date and time"],
       },
       package: {
         title: "Monthly package",
@@ -343,7 +348,7 @@ export const translations: Record<Lang, Translation> = {
         description:
           "Four sessions booked at once — same price per session, one single payment.",
         features: [
-          "4 sessions of 50 minutes",
+          "4 online sessions",
           "Book all dates at once",
           "One single payment",
           "Same price per session",
@@ -355,7 +360,7 @@ export const translations: Record<Lang, Translation> = {
       selectDatePackage: "Choose your 4 dates",
       selectedDates: "Selected dates",
       selectTime: "Choose your time",
-      timezoneNote: "Times shown in Central European Time (CET) · Mon–Fri",
+      timezoneNote: "Times shown in Central European Time (CET) · Tue–Thu",
       continue: "Continue",
       back: "Back",
       summary: "Summary",
@@ -372,6 +377,8 @@ export const translations: Record<Lang, Translation> = {
       country: "Country of residence",
       countryPlaceholder: "e.g. Brazil",
       sessionLanguage: "Session language",
+      brLimitNote:
+        "Limited availability: only 8 spots in my calendar are reserved for residents of Brazil — the remaining spots are exclusive to clients living abroad.",
       payment: "Payment",
       pixTitle: "Pay with PIX",
       pixInstructions:
@@ -562,7 +569,7 @@ export const translations: Record<Lang, Translation> = {
         },
         {
           q: "Como funcionam as sessões online?",
-          a: "As sessões duram 50 minutos e acontecem por videochamada, em português, inglês ou espanhol. Você só precisa de um lugar tranquilo e uma conexão estável. Depois de agendar, você recebe o link da videochamada por e-mail. A análise online é tão profunda e acolhedora quanto a presencial — onde você estiver no mundo.",
+          a: "As sessões acontecem por videochamada, em português, inglês ou espanhol. Você só precisa de um lugar tranquilo e uma conexão estável. Depois de agendar, você recebe o link da videochamada por e-mail. A análise online é tão profunda e acolhedora quanto a presencial — onde você estiver no mundo.",
         },
         {
           q: "Com que frequência devo fazer sessões?",
@@ -570,7 +577,11 @@ export const translations: Record<Lang, Translation> = {
         },
         {
           q: "Quais meios de pagamento são aceitos?",
-          a: "No Brasil, o pagamento é em reais (R$ 250 por sessão) via PIX. Na Europa e nos demais países, o pagamento é em euros (€88 por sessão) por transferência bancária internacional (IBAN). O site mostra automaticamente a moeda e a forma de pagamento da sua região, e todos os dados aparecem na hora de agendar.",
+          a: "No Brasil, o pagamento é feito via PIX. Na Europa e nos demais países, por transferência bancária internacional (IBAN). A moeda do pagamento depende do país onde você mora: reais para quem reside no Brasil e euros para quem reside fora. O site mostra a opção certa automaticamente, e todos os dados aparecem na hora de agendar.",
+        },
+        {
+          q: "Preciso de uma sessão urgente. O que faço?",
+          a: "Me escreva diretamente no e-mail {email} contando brevemente o que está acontecendo. Eu mesma encontro um horário para você o quanto antes — mesmo fora da agenda mostrada neste site.",
         },
         {
           q: "Como sei se a psicanálise é para mim?",
@@ -588,8 +599,8 @@ export const translations: Record<Lang, Translation> = {
       stepPayment: "Pagamento",
       single: {
         title: "Sessão avulsa",
-        description: "Uma sessão online de 50 minutos, no seu ritmo.",
-        features: ["Sessão de 50 minutos", "Online por videochamada", "PT · EN · ES"],
+        description: "Uma sessão online, no seu ritmo.",
+        features: ["Online por videochamada", "PT · EN · ES", "Você escolhe a data e o horário"],
       },
       package: {
         title: "Pacote mensal",
@@ -597,7 +608,7 @@ export const translations: Record<Lang, Translation> = {
         description:
           "Quatro sessões agendadas de uma vez — mesmo valor por sessão, um único pagamento.",
         features: [
-          "4 sessões de 50 minutos",
+          "4 sessões online",
           "Agende todas as datas de uma vez",
           "Um único pagamento",
           "Mesmo valor por sessão",
@@ -609,7 +620,7 @@ export const translations: Record<Lang, Translation> = {
       selectDatePackage: "Escolha as suas 4 datas",
       selectedDates: "Datas selecionadas",
       selectTime: "Escolha o horário",
-      timezoneNote: "Horários no fuso da Europa Central (CET) · Seg–Sex",
+      timezoneNote: "Horários no fuso da Europa Central (CET) · Ter–Qui",
       continue: "Continuar",
       back: "Voltar",
       summary: "Resumo",
@@ -626,6 +637,8 @@ export const translations: Record<Lang, Translation> = {
       country: "País de residência",
       countryPlaceholder: "ex.: Brasil",
       sessionLanguage: "Idioma da sessão",
+      brLimitNote:
+        "Vagas limitadas: reservo apenas 8 vagas da minha agenda para residentes no Brasil — as demais são exclusivas para quem mora no exterior.",
       payment: "Pagamento",
       pixTitle: "Pague com PIX",
       pixInstructions:
@@ -816,7 +829,7 @@ export const translations: Record<Lang, Translation> = {
         },
         {
           q: "¿Cómo funcionan las sesiones online?",
-          a: "Las sesiones duran 50 minutos y son por videollamada, en español, portugués o inglés. Solo necesitas un lugar tranquilo y una conexión estable. Después de reservar, recibes el enlace de la videollamada por correo. El análisis online es tan profundo y cálido como el presencial — estés donde estés.",
+          a: "Las sesiones son por videollamada, en español, portugués o inglés. Solo necesitas un lugar tranquilo y una conexión estable. Después de reservar, recibes el enlace de la videollamada por correo. El análisis online es tan profundo y cálido como el presencial — estés donde estés.",
         },
         {
           q: "¿Con qué frecuencia debo tener sesiones?",
@@ -824,7 +837,11 @@ export const translations: Record<Lang, Translation> = {
         },
         {
           q: "¿Qué métodos de pago aceptan?",
-          a: "En Brasil, el pago es en reales (R$ 250 por sesión) vía PIX. En Europa y en los demás países, el pago es en euros (€88 por sesión) por transferencia bancaria internacional (IBAN). El sitio muestra automáticamente la moneda y el método de pago de tu región, y todos los datos aparecen al reservar.",
+          a: "En Brasil, el pago se hace vía PIX. En Europa y en los demás países, por transferencia bancaria internacional (IBAN). La moneda del pago depende del país donde vives: reales para quienes residen en Brasil y euros para quienes residen fuera. El sitio muestra la opción correcta automáticamente, y todos los datos aparecen al reservar.",
+        },
+        {
+          q: "Necesito una sesión urgente. ¿Qué hago?",
+          a: "Escríbeme directamente al correo {email} contándome brevemente lo que está pasando. Yo misma encontraré un horario para ti lo antes posible — incluso fuera de la agenda que muestra este sitio.",
         },
         {
           q: "¿Cómo sé si el psicoanálisis es para mí?",
@@ -842,8 +859,8 @@ export const translations: Record<Lang, Translation> = {
       stepPayment: "Pago",
       single: {
         title: "Sesión individual",
-        description: "Una sesión online de 50 minutos, a tu ritmo.",
-        features: ["Sesión de 50 minutos", "Online por videollamada", "ES · PT · EN"],
+        description: "Una sesión online, a tu ritmo.",
+        features: ["Online por videollamada", "ES · PT · EN", "Tú eliges la fecha y la hora"],
       },
       package: {
         title: "Paquete mensual",
@@ -851,7 +868,7 @@ export const translations: Record<Lang, Translation> = {
         description:
           "Cuatro sesiones reservadas de una vez — mismo precio por sesión, un solo pago.",
         features: [
-          "4 sesiones de 50 minutos",
+          "4 sesiones online",
           "Reserva todas las fechas de una vez",
           "Un solo pago",
           "Mismo precio por sesión",
@@ -863,7 +880,7 @@ export const translations: Record<Lang, Translation> = {
       selectDatePackage: "Elige tus 4 fechas",
       selectedDates: "Fechas seleccionadas",
       selectTime: "Elige la hora",
-      timezoneNote: "Horarios en hora de Europa Central (CET) · Lun–Vie",
+      timezoneNote: "Horarios en hora de Europa Central (CET) · Mar–Jue",
       continue: "Continuar",
       back: "Volver",
       summary: "Resumen",
@@ -880,6 +897,8 @@ export const translations: Record<Lang, Translation> = {
       country: "País de residencia",
       countryPlaceholder: "ej.: España",
       sessionLanguage: "Idioma de la sesión",
+      brLimitNote:
+        "Disponibilidad limitada: reservo solo 8 lugares de mi agenda para residentes en Brasil — los demás son exclusivos para quienes viven en el extranjero.",
       payment: "Pago",
       pixTitle: "Paga con PIX",
       pixInstructions:

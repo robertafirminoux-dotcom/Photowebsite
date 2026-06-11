@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { useLanguage } from "../../i18n/LanguageContext";
+import { SITE } from "../../site.config";
 
 export function Faq() {
   const { t } = useLanguage();
@@ -33,7 +34,7 @@ export function Faq() {
                 {item.q}
               </AccordionTrigger>
               <AccordionContent className="pb-5 leading-relaxed text-muted-foreground">
-                {item.a}
+                {item.a.replace("{email}", SITE.email)}
               </AccordionContent>
             </AccordionItem>
           ))}
