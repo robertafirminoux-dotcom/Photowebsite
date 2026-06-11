@@ -1,5 +1,3 @@
-import type { Lang } from "../i18n/translations";
-
 /**
  * Pricing is regional: clients in Brazil pay in reais via PIX,
  * everyone else pays in euros via bank transfer (IBAN).
@@ -31,12 +29,11 @@ const BRAZIL_TIMEZONES = new Set([
 ]);
 
 /**
- * English and Spanish visitors always see euros. Portuguese visitors
- * see reais only when they are actually in Brazil (detected via the
- * device timezone, falling back to the pt-BR browser locale).
+ * Payment currency depends only on where the visitor is, regardless of
+ * the site language: Brazil pays in reais, everyone else in euros.
+ * Detected via the device timezone, falling back to the pt-BR locale.
  */
-export function detectRegion(lang: Lang): Region {
-  if (lang !== "pt") return "intl";
+export function detectRegion(): Region {
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (tz) return BRAZIL_TIMEZONES.has(tz) ? "br" : "intl";

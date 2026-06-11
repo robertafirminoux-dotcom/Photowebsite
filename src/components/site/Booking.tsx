@@ -29,7 +29,10 @@ import { SITE } from "../../site.config";
 type Step = "plan" | "schedule" | "payment" | "success";
 type Plan = "single" | "package";
 
-const TIME_SLOTS = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+// Working hours: 10:00–18:00 CET, Tuesday to Thursday.
+const TIME_SLOTS = ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+// react-day-picker dayOfWeek: 0=Sun … 6=Sat — everything except Tue/Wed/Thu is disabled.
+const UNAVAILABLE_DAYS = [0, 1, 5, 6];
 const DATE_LOCALES = { en: enUS, pt: ptBR, es: esLocale };
 const INTL_LOCALES: Record<Lang, string> = { en: "en-GB", pt: "pt-BR", es: "es-ES" };
 
@@ -91,7 +94,7 @@ export function Booking() {
   const [error, setError] = useState("");
 
   const b = t.booking;
-  const region = useMemo(() => detectRegion(lang), [lang]);
+  const region = useMemo(() => detectRegion(), []);
   const sessionPrice = PRICING[region].session;
   const requiredDates = plan === "single" ? 1 : PACKAGE_SESSIONS;
   const total = sessionPrice * requiredDates;
@@ -202,6 +205,12 @@ export function Booking() {
           </div>
         )}
 
+        {step === "plan" && region === "br" && (
+          <p className="mx-auto mt-8 max-w-2xl rounded-2xl border border-amber-300 bg-amber-50 px-5 py-3 text-center text-sm text-amber-900">
+            {b.brLimitNote}
+          </p>
+        )}
+
         {step === "plan" && (
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             {(["single", "package"] as const).map((p) => {
@@ -272,7 +281,7 @@ export function Booking() {
                     locale={DATE_LOCALES[lang]}
                     selected={dates[0]}
                     onSelect={(d) => setDates(d ? [d] : [])}
-                    disabled={[{ before: tomorrow }, { dayOfWeek: [0, 6] }]}
+                    disabled={[{ before: tomorrow }, { dayOfWeek: UNAVAILABLE_DAYS }]}
                   />
                 ) : (
                   <Calendar
@@ -281,7 +290,7 @@ export function Booking() {
                     selected={dates}
                     max={PACKAGE_SESSIONS}
                     onSelect={(d) => setDates(d ?? [])}
-                    disabled={[{ before: tomorrow }, { dayOfWeek: [0, 6] }]}
+                    disabled={[{ before: tomorrow }, { dayOfWeek: UNAVAILABLE_DAYS }]}
                   />
                 )}
               </div>
