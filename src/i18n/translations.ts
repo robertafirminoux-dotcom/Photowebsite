@@ -6,7 +6,6 @@ export const LANGS: { code: Lang; label: string; flag: string }[] = [
   { code: "es", label: "Español", flag: "🇪🇸" },
 ];
 
-export const SESSION_PRICE = 90;
 export const PACKAGE_SESSIONS = 4;
 
 export interface Testimonial {
@@ -20,12 +19,18 @@ export interface Specialty {
   description: string;
 }
 
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
 interface Translation {
   nav: {
     about: string;
     specialties: string;
     content: string;
     testimonials: string;
+    faq: string;
     book: string;
     bookCta: string;
   };
@@ -38,6 +43,7 @@ interface Translation {
     ctaSecondary: string;
     languagesLabel: string;
     locationNote: string;
+    role: string;
   };
   about: {
     label: string;
@@ -46,6 +52,8 @@ interface Translation {
     p2: string;
     p3: string;
     highlights: string[];
+    photoIntro: string;
+    photoSticker: string;
   };
   specialties: {
     label: string;
@@ -65,7 +73,14 @@ interface Translation {
     label: string;
     title: string;
     subtitle: string;
+    refs: string[];
     items: Testimonial[];
+  };
+  faq: {
+    label: string;
+    title: string;
+    subtitle: string;
+    items: FaqItem[];
   };
   booking: {
     label: string;
@@ -76,13 +91,11 @@ interface Translation {
     stepPayment: string;
     single: {
       title: string;
-      price: string;
       description: string;
       features: string[];
     };
     package: {
       title: string;
-      price: string;
       badge: string;
       description: string;
       features: string[];
@@ -105,15 +118,26 @@ interface Translation {
     namePlaceholder: string;
     email: string;
     emailPlaceholder: string;
+    cpf: string;
+    cpfPlaceholder: string;
+    country: string;
+    countryPlaceholder: string;
     sessionLanguage: string;
     payment: string;
-    cardName: string;
-    cardNumber: string;
-    expiry: string;
-    cvc: string;
-    payNow: string;
+    pixTitle: string;
+    pixInstructions: string;
+    pixKeyLabel: string;
+    transferTitle: string;
+    transferInstructions: string;
+    accountHolderLabel: string;
+    ibanLabel: string;
+    bicLabel: string;
+    amountLabel: string;
+    copy: string;
+    copied: string;
+    confirmBooking: string;
     processing: string;
-    securityNote: string;
+    paymentNote: string;
     successTitle: string;
     successMessage: string;
     successDetail: string;
@@ -137,6 +161,7 @@ export const translations: Record<Lang, Translation> = {
       specialties: "Specialties",
       content: "Content",
       testimonials: "Testimonials",
+      faq: "FAQ",
       book: "Booking",
       bookCta: "Book a session",
     },
@@ -150,6 +175,7 @@ export const translations: Record<Lang, Translation> = {
       ctaSecondary: "Get to know me",
       languagesLabel: "Sessions in",
       locationNote: "Online · Serving clients in Europe, the Americas and beyond",
+      role: "Psychoanalyst",
     },
     about: {
       label: "About me",
@@ -163,6 +189,8 @@ export const translations: Record<Lang, Translation> = {
         "A welcoming, judgment-free space",
         "Focus on the feminine and self-esteem",
       ],
+      photoIntro: "Hello, I'm",
+      photoSticker: "Meet your psychoanalyst.",
     },
     specialties: {
       label: "Specialties",
@@ -227,9 +255,10 @@ export const translations: Record<Lang, Translation> = {
       },
     },
     testimonials: {
-      label: "Testimonials",
+      label: "What clients say",
       title: "Words from people I've had the honor to accompany",
       subtitle: "Every story is unique — these are some of them, shared with permission.",
+      refs: ["Clients in 10+ countries", "Sessions in 3 languages", "100% online"],
       items: [
         {
           name: "Mariana S.",
@@ -263,23 +292,53 @@ export const translations: Record<Lang, Translation> = {
         },
       ],
     },
+    faq: {
+      label: "FAQ",
+      title: "Frequently asked questions",
+      subtitle:
+        "Everything you'd like to know before our first session — and if anything is missing, just write to me.",
+      items: [
+        {
+          q: "What is the difference between psychoanalysis and therapy?",
+          a: "Therapy often focuses on relieving a specific symptom or solving a present problem. Psychoanalysis goes deeper: it listens to your unconscious — the patterns you repeat, your dreams, your slips — to understand the roots of what you feel. It's a journey of self-knowledge that transforms not just a symptom, but your relationship with your own story.",
+        },
+        {
+          q: "How does psychoanalysis work?",
+          a: "In our sessions you are invited to speak freely about whatever comes to mind — there is no script and no judgment. Through this open listening, we discover together the meanings behind what you feel, repeat and dream. Over time, what was confusing starts to make sense, and new ways of living become possible.",
+        },
+        {
+          q: "How do online sessions work?",
+          a: "Sessions last 50 minutes and happen by video call, in English, Portuguese or Spanish. You only need a quiet place and a stable internet connection. After booking, you receive the video call link by email. Online analysis is just as deep and welcoming as in person — wherever you are in the world.",
+        },
+        {
+          q: "How often should I have sessions?",
+          a: "Most people start with one session per week — consistency is what makes the process deepen. That's why the monthly package with 4 sessions exists. But every journey is unique: we can find together the rhythm that fits your moment and your life.",
+        },
+        {
+          q: "Which payment methods do you accept?",
+          a: "In Brazil, payment is in reais (R$ 250 per session) via PIX. In Europe and all other countries, payment is in euros (€88 per session) via international bank transfer (IBAN). The website automatically shows the currency and payment method for your region, and you'll find all the details at checkout.",
+        },
+        {
+          q: "How do I know if psychoanalysis is for me?",
+          a: "If you feel that something repeats in your life — in love, in family, in your relationship with money or with yourself — and you want to understand it instead of just enduring it, psychoanalysis can be a powerful path. The best way to find out is to experience a first session, with no commitment to continue.",
+        },
+      ],
+    },
     booking: {
       label: "Booking",
       title: "Choose a moment that is just for you",
       subtitle:
-        "Pick a date in my calendar, choose your time, and complete your payment — all in one place. I'll be waiting for you.",
+        "Pick a date in my calendar, choose your time, and confirm your payment — all in one place. I'll be waiting for you.",
       stepPlan: "Plan",
       stepSchedule: "Schedule",
       stepPayment: "Payment",
       single: {
         title: "Single session",
-        price: "€90",
         description: "One 50-minute online session, at your pace.",
         features: ["50-minute session", "Online via video call", "EN · PT · ES"],
       },
       package: {
         title: "Monthly package",
-        price: "€360",
         badge: "Most convenient",
         description:
           "Four sessions booked at once — same price per session, one single payment.",
@@ -287,7 +346,7 @@ export const translations: Record<Lang, Translation> = {
           "4 sessions of 50 minutes",
           "Book all dates at once",
           "One single payment",
-          "Same price per session (€90)",
+          "Same price per session",
         ],
       },
       perSession: "per session",
@@ -308,18 +367,32 @@ export const translations: Record<Lang, Translation> = {
       namePlaceholder: "Your name",
       email: "Email",
       emailPlaceholder: "you@email.com",
+      cpf: "CPF",
+      cpfPlaceholder: "000.000.000-00",
+      country: "Country of residence",
+      countryPlaceholder: "e.g. Brazil",
       sessionLanguage: "Session language",
       payment: "Payment",
-      cardName: "Name on card",
-      cardNumber: "Card number",
-      expiry: "Expiry",
-      cvc: "CVC",
-      payNow: "Confirm and pay",
-      processing: "Processing payment…",
-      securityNote: "Secure payment · Your details are encrypted",
-      successTitle: "Your session is booked! 💙",
+      pixTitle: "Pay with PIX",
+      pixInstructions:
+        "Make a PIX transfer for the total amount using the key below, then confirm your booking. Your times are reserved and you'll receive the confirmation email as soon as the payment is identified.",
+      pixKeyLabel: "PIX key (CPF)",
+      transferTitle: "Pay by bank transfer (SEPA/IBAN)",
+      transferInstructions:
+        "Make a bank transfer for the total amount using the details below, then confirm your booking. Your times are reserved and you'll receive the confirmation email as soon as the payment is identified.",
+      accountHolderLabel: "Account holder",
+      ibanLabel: "IBAN",
+      bicLabel: "BIC/SWIFT",
+      amountLabel: "Amount to transfer",
+      copy: "Copy",
+      copied: "Copied!",
+      confirmBooking: "I've sent the payment — confirm booking",
+      processing: "Confirming your booking…",
+      paymentNote:
+        "Your booking is confirmed after the payment is identified — usually within a few hours.",
+      successTitle: "Your booking is reserved! 💙",
       successMessage:
-        "Thank you for trusting me with your story. You'll receive a confirmation email with the video call link shortly.",
+        "Thank you for trusting me with your story. As soon as your payment is identified, you'll receive a confirmation email with the video call link.",
       successDetail: "I'm truly looking forward to meeting you.",
       bookAnother: "Book another session",
       fillAllFields: "Please fill in all fields to continue.",
@@ -342,6 +415,7 @@ export const translations: Record<Lang, Translation> = {
       specialties: "Especialidades",
       content: "Conteúdo",
       testimonials: "Depoimentos",
+      faq: "Dúvidas",
       book: "Agendamento",
       bookCta: "Agendar sessão",
     },
@@ -355,6 +429,7 @@ export const translations: Record<Lang, Translation> = {
       ctaSecondary: "Me conhecer melhor",
       languagesLabel: "Sessões em",
       locationNote: "Online · Atendendo na Europa, nas Américas e além",
+      role: "Psicanalista",
     },
     about: {
       label: "Sobre mim",
@@ -368,6 +443,8 @@ export const translations: Record<Lang, Translation> = {
         "Um espaço acolhedor e sem julgamentos",
         "Foco no feminino e na autoestima",
       ],
+      photoIntro: "Olá, eu sou a",
+      photoSticker: "Conheça sua psicanalista.",
     },
     specialties: {
       label: "Especialidades",
@@ -432,9 +509,10 @@ export const translations: Record<Lang, Translation> = {
       },
     },
     testimonials: {
-      label: "Depoimentos",
+      label: "O que dizem",
       title: "Palavras de pessoas que tive a honra de acompanhar",
       subtitle: "Cada história é única — estas são algumas delas, compartilhadas com permissão.",
+      refs: ["Clientes em 10+ países", "Sessões em 3 idiomas", "100% online"],
       items: [
         {
           name: "Mariana S.",
@@ -468,23 +546,53 @@ export const translations: Record<Lang, Translation> = {
         },
       ],
     },
+    faq: {
+      label: "Dúvidas frequentes",
+      title: "Perguntas frequentes",
+      subtitle:
+        "Tudo o que você gostaria de saber antes da nossa primeira sessão — e se faltar algo, é só me escrever.",
+      items: [
+        {
+          q: "Qual a diferença entre psicanálise e terapia?",
+          a: "A terapia costuma focar no alívio de um sintoma específico ou na solução de um problema do presente. A psicanálise vai mais fundo: ela escuta o seu inconsciente — os padrões que você repete, os sonhos, os atos falhos — para entender as raízes do que você sente. É uma jornada de autoconhecimento que transforma não só um sintoma, mas a sua relação com a própria história.",
+        },
+        {
+          q: "Como funciona a psicanálise?",
+          a: "Nas sessões, você é convidada(o) a falar livremente sobre o que vier à mente — sem roteiro e sem julgamento. Através dessa escuta aberta, descobrimos juntas(os) os sentidos por trás do que você sente, repete e sonha. Com o tempo, o que era confuso começa a fazer sentido, e novas formas de viver se tornam possíveis.",
+        },
+        {
+          q: "Como funcionam as sessões online?",
+          a: "As sessões duram 50 minutos e acontecem por videochamada, em português, inglês ou espanhol. Você só precisa de um lugar tranquilo e uma conexão estável. Depois de agendar, você recebe o link da videochamada por e-mail. A análise online é tão profunda e acolhedora quanto a presencial — onde você estiver no mundo.",
+        },
+        {
+          q: "Com que frequência devo fazer sessões?",
+          a: "A maioria das pessoas começa com uma sessão por semana — é a constância que faz o processo se aprofundar. Por isso existe o pacote mensal com 4 sessões. Mas cada jornada é única: podemos encontrar juntas(os) o ritmo que cabe no seu momento e na sua vida.",
+        },
+        {
+          q: "Quais meios de pagamento são aceitos?",
+          a: "No Brasil, o pagamento é em reais (R$ 250 por sessão) via PIX. Na Europa e nos demais países, o pagamento é em euros (€88 por sessão) por transferência bancária internacional (IBAN). O site mostra automaticamente a moeda e a forma de pagamento da sua região, e todos os dados aparecem na hora de agendar.",
+        },
+        {
+          q: "Como sei se a psicanálise é para mim?",
+          a: "Se você sente que algo se repete na sua vida — no amor, na família, na relação com o dinheiro ou com você mesma(o) — e quer entender em vez de apenas suportar, a psicanálise pode ser um caminho poderoso. A melhor forma de descobrir é viver uma primeira sessão, sem compromisso de continuar.",
+        },
+      ],
+    },
     booking: {
       label: "Agendamento",
       title: "Escolha um momento que seja só seu",
       subtitle:
-        "Escolha uma data no meu calendário, defina o horário e finalize o pagamento — tudo em um só lugar. Estarei te esperando.",
+        "Escolha uma data no meu calendário, defina o horário e confirme o pagamento — tudo em um só lugar. Estarei te esperando.",
       stepPlan: "Plano",
       stepSchedule: "Agenda",
       stepPayment: "Pagamento",
       single: {
         title: "Sessão avulsa",
-        price: "€90",
         description: "Uma sessão online de 50 minutos, no seu ritmo.",
         features: ["Sessão de 50 minutos", "Online por videochamada", "PT · EN · ES"],
       },
       package: {
         title: "Pacote mensal",
-        price: "€360",
         badge: "Mais prático",
         description:
           "Quatro sessões agendadas de uma vez — mesmo valor por sessão, um único pagamento.",
@@ -492,7 +600,7 @@ export const translations: Record<Lang, Translation> = {
           "4 sessões de 50 minutos",
           "Agende todas as datas de uma vez",
           "Um único pagamento",
-          "Mesmo valor por sessão (€90)",
+          "Mesmo valor por sessão",
         ],
       },
       perSession: "por sessão",
@@ -513,18 +621,32 @@ export const translations: Record<Lang, Translation> = {
       namePlaceholder: "Seu nome",
       email: "E-mail",
       emailPlaceholder: "voce@email.com",
+      cpf: "CPF",
+      cpfPlaceholder: "000.000.000-00",
+      country: "País de residência",
+      countryPlaceholder: "ex.: Brasil",
       sessionLanguage: "Idioma da sessão",
       payment: "Pagamento",
-      cardName: "Nome no cartão",
-      cardNumber: "Número do cartão",
-      expiry: "Validade",
-      cvc: "CVC",
-      payNow: "Confirmar e pagar",
-      processing: "Processando pagamento…",
-      securityNote: "Pagamento seguro · Seus dados são criptografados",
-      successTitle: "Sua sessão está agendada! 💙",
+      pixTitle: "Pague com PIX",
+      pixInstructions:
+        "Faça um PIX no valor total para a chave abaixo e depois confirme o agendamento. Seus horários ficam reservados e você recebe o e-mail de confirmação assim que o pagamento for identificado.",
+      pixKeyLabel: "Chave PIX (CPF)",
+      transferTitle: "Pague por transferência bancária (SEPA/IBAN)",
+      transferInstructions:
+        "Faça uma transferência no valor total usando os dados abaixo e depois confirme o agendamento. Seus horários ficam reservados e você recebe o e-mail de confirmação assim que o pagamento for identificado.",
+      accountHolderLabel: "Titular da conta",
+      ibanLabel: "IBAN",
+      bicLabel: "BIC/SWIFT",
+      amountLabel: "Valor a transferir",
+      copy: "Copiar",
+      copied: "Copiado!",
+      confirmBooking: "Já fiz o pagamento — confirmar agendamento",
+      processing: "Confirmando seu agendamento…",
+      paymentNote:
+        "Seu agendamento é confirmado após a identificação do pagamento — geralmente em poucas horas.",
+      successTitle: "Seu horário está reservado! 💙",
       successMessage:
-        "Obrigada por confiar a sua história a mim. Em breve você receberá um e-mail de confirmação com o link da videochamada.",
+        "Obrigada por confiar a sua história a mim. Assim que o pagamento for identificado, você receberá um e-mail de confirmação com o link da videochamada.",
       successDetail: "Estou ansiosa para te conhecer.",
       bookAnother: "Agendar outra sessão",
       fillAllFields: "Por favor, preencha todos os campos para continuar.",
@@ -547,6 +669,7 @@ export const translations: Record<Lang, Translation> = {
       specialties: "Especialidades",
       content: "Contenido",
       testimonials: "Testimonios",
+      faq: "Preguntas",
       book: "Reservas",
       bookCta: "Reservar sesión",
     },
@@ -560,6 +683,7 @@ export const translations: Record<Lang, Translation> = {
       ctaSecondary: "Conocerme mejor",
       languagesLabel: "Sesiones en",
       locationNote: "Online · Atendiendo en Europa, América y más allá",
+      role: "Psicoanalista",
     },
     about: {
       label: "Sobre mí",
@@ -573,6 +697,8 @@ export const translations: Record<Lang, Translation> = {
         "Un espacio cálido y sin juicios",
         "Enfoque en lo femenino y la autoestima",
       ],
+      photoIntro: "Hola, soy",
+      photoSticker: "Conoce a tu psicoanalista.",
     },
     specialties: {
       label: "Especialidades",
@@ -637,9 +763,10 @@ export const translations: Record<Lang, Translation> = {
       },
     },
     testimonials: {
-      label: "Testimonios",
+      label: "Lo que dicen",
       title: "Palabras de personas que tuve el honor de acompañar",
       subtitle: "Cada historia es única — estas son algunas, compartidas con permiso.",
+      refs: ["Clientes en 10+ países", "Sesiones en 3 idiomas", "100% online"],
       items: [
         {
           name: "Mariana S.",
@@ -673,23 +800,53 @@ export const translations: Record<Lang, Translation> = {
         },
       ],
     },
+    faq: {
+      label: "Preguntas frecuentes",
+      title: "Preguntas frecuentes",
+      subtitle:
+        "Todo lo que te gustaría saber antes de nuestra primera sesión — y si falta algo, solo escríbeme.",
+      items: [
+        {
+          q: "¿Cuál es la diferencia entre psicoanálisis y terapia?",
+          a: "La terapia suele enfocarse en aliviar un síntoma específico o resolver un problema del presente. El psicoanálisis va más profundo: escucha tu inconsciente — los patrones que repites, los sueños, los actos fallidos — para entender las raíces de lo que sientes. Es un camino de autoconocimiento que transforma no solo un síntoma, sino tu relación con tu propia historia.",
+        },
+        {
+          q: "¿Cómo funciona el psicoanálisis?",
+          a: "En las sesiones estás invitada(o) a hablar libremente de lo que venga a tu mente — sin guion y sin juicio. A través de esa escucha abierta, descubrimos juntas(os) los sentidos detrás de lo que sientes, repites y sueñas. Con el tiempo, lo que era confuso empieza a tener sentido, y nuevas formas de vivir se vuelven posibles.",
+        },
+        {
+          q: "¿Cómo funcionan las sesiones online?",
+          a: "Las sesiones duran 50 minutos y son por videollamada, en español, portugués o inglés. Solo necesitas un lugar tranquilo y una conexión estable. Después de reservar, recibes el enlace de la videollamada por correo. El análisis online es tan profundo y cálido como el presencial — estés donde estés.",
+        },
+        {
+          q: "¿Con qué frecuencia debo tener sesiones?",
+          a: "La mayoría de las personas comienza con una sesión por semana — la constancia es lo que hace que el proceso se profundice. Por eso existe el paquete mensual de 4 sesiones. Pero cada camino es único: podemos encontrar juntas(os) el ritmo que se adapta a tu momento y a tu vida.",
+        },
+        {
+          q: "¿Qué métodos de pago aceptan?",
+          a: "En Brasil, el pago es en reales (R$ 250 por sesión) vía PIX. En Europa y en los demás países, el pago es en euros (€88 por sesión) por transferencia bancaria internacional (IBAN). El sitio muestra automáticamente la moneda y el método de pago de tu región, y todos los datos aparecen al reservar.",
+        },
+        {
+          q: "¿Cómo sé si el psicoanálisis es para mí?",
+          a: "Si sientes que algo se repite en tu vida — en el amor, en la familia, en tu relación con el dinero o contigo misma(o) — y quieres entenderlo en lugar de solo soportarlo, el psicoanálisis puede ser un camino poderoso. La mejor forma de descubrirlo es vivir una primera sesión, sin compromiso de continuar.",
+        },
+      ],
+    },
     booking: {
       label: "Reservas",
       title: "Elige un momento que sea solo tuyo",
       subtitle:
-        "Elige una fecha en mi calendario, define la hora y completa el pago — todo en un solo lugar. Te estaré esperando.",
+        "Elige una fecha en mi calendario, define la hora y confirma el pago — todo en un solo lugar. Te estaré esperando.",
       stepPlan: "Plan",
       stepSchedule: "Agenda",
       stepPayment: "Pago",
       single: {
         title: "Sesión individual",
-        price: "€90",
         description: "Una sesión online de 50 minutos, a tu ritmo.",
         features: ["Sesión de 50 minutos", "Online por videollamada", "ES · PT · EN"],
       },
       package: {
         title: "Paquete mensual",
-        price: "€360",
         badge: "Más práctico",
         description:
           "Cuatro sesiones reservadas de una vez — mismo precio por sesión, un solo pago.",
@@ -697,7 +854,7 @@ export const translations: Record<Lang, Translation> = {
           "4 sesiones de 50 minutos",
           "Reserva todas las fechas de una vez",
           "Un solo pago",
-          "Mismo precio por sesión (€90)",
+          "Mismo precio por sesión",
         ],
       },
       perSession: "por sesión",
@@ -718,18 +875,32 @@ export const translations: Record<Lang, Translation> = {
       namePlaceholder: "Tu nombre",
       email: "Correo electrónico",
       emailPlaceholder: "tu@email.com",
+      cpf: "CPF",
+      cpfPlaceholder: "000.000.000-00",
+      country: "País de residencia",
+      countryPlaceholder: "ej.: España",
       sessionLanguage: "Idioma de la sesión",
       payment: "Pago",
-      cardName: "Nombre en la tarjeta",
-      cardNumber: "Número de tarjeta",
-      expiry: "Vencimiento",
-      cvc: "CVC",
-      payNow: "Confirmar y pagar",
-      processing: "Procesando el pago…",
-      securityNote: "Pago seguro · Tus datos están cifrados",
-      successTitle: "¡Tu sesión está reservada! 💙",
+      pixTitle: "Paga con PIX",
+      pixInstructions:
+        "Haz un PIX por el importe total a la clave de abajo y luego confirma tu reserva. Tus horarios quedan reservados y recibirás el correo de confirmación en cuanto se identifique el pago.",
+      pixKeyLabel: "Clave PIX (CPF)",
+      transferTitle: "Paga por transferencia bancaria (SEPA/IBAN)",
+      transferInstructions:
+        "Haz una transferencia por el importe total con los datos de abajo y luego confirma tu reserva. Tus horarios quedan reservados y recibirás el correo de confirmación en cuanto se identifique el pago.",
+      accountHolderLabel: "Titular de la cuenta",
+      ibanLabel: "IBAN",
+      bicLabel: "BIC/SWIFT",
+      amountLabel: "Importe a transferir",
+      copy: "Copiar",
+      copied: "¡Copiado!",
+      confirmBooking: "Ya envié el pago — confirmar reserva",
+      processing: "Confirmando tu reserva…",
+      paymentNote:
+        "Tu reserva se confirma después de identificar el pago — normalmente en pocas horas.",
+      successTitle: "¡Tu horario está reservado! 💙",
       successMessage:
-        "Gracias por confiarme tu historia. Pronto recibirás un correo de confirmación con el enlace de la videollamada.",
+        "Gracias por confiarme tu historia. En cuanto se identifique el pago, recibirás un correo de confirmación con el enlace de la videollamada.",
       successDetail: "Tengo muchas ganas de conocerte.",
       bookAnother: "Reservar otra sesión",
       fillAllFields: "Por favor, completa todos los campos para continuar.",

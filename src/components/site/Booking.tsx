@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { enUS, es as esLocale, ptBR } from "date-fns/locale";
 import {
   ArrowLeft,
   ArrowRight,
   CalendarDays,
   Check,
-  CreditCard,
+  Copy,
   Heart,
-  Lock,
+  Landmark,
+  QrCode,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
@@ -21,7 +22,9 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useLanguage } from "../../i18n/LanguageContext";
-import { LANGS, PACKAGE_SESSIONS, SESSION_PRICE, type Lang } from "../../i18n/translations";
+import { LANGS, PACKAGE_SESSIONS, type Lang } from "../../i18n/translations";
+import { detectRegion, formatPrice, PRICING } from "../../lib/region";
+import { SITE } from "../../site.config";
 
 type Step = "plan" | "schedule" | "payment" | "success";
 type Plan = "single" | "package";
@@ -29,6 +32,49 @@ type Plan = "single" | "package";
 const TIME_SLOTS = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
 const DATE_LOCALES = { en: enUS, pt: ptBR, es: esLocale };
 const INTL_LOCALES: Record<Lang, string> = { en: "en-GB", pt: "pt-BR", es: "es-ES" };
+
+function CopyField({
+  label,
+  value,
+  copyLabel,
+  copiedLabel,
+}: {
+  label: string;
+  value: string;
+  copyLabel: string;
+  copiedLabel: string;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard unavailable (e.g. insecure context) — user can still select the text.
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-4 py-3">
+      <div className="min-w-0">
+        <p className="text-xs text-muted-foreground">{label}</p>
+        <p className="truncate text-sm font-semibold text-blue-deep">{value}</p>
+      </div>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        onClick={copy}
+        className="shrink-0 rounded-full"
+      >
+        {copied ? <Check className="size-3.5 text-primary" /> : <Copy className="size-3.5" />}
+        {copied ? copiedLabel : copyLabel}
+      </Button>
+    </div>
+  );
+}
 
 export function Booking() {
   const { t, lang } = useLanguage();
@@ -38,24 +84,26 @@ export function Booking() {
   const [time, setTime] = useState<string>("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [country, setCountry] = useState("");
   const [sessionLang, setSessionLang] = useState<string>(lang);
-  const [cardName, setCardName] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvc, setCvc] = useState("");
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState("");
 
   const b = t.booking;
+  const region = useMemo(() => detectRegion(lang), [lang]);
+  const sessionPrice = PRICING[region].session;
   const requiredDates = plan === "single" ? 1 : PACKAGE_SESSIONS;
-  const total = SESSION_PRICE * requiredDates;
+  const total = sessionPrice * requiredDates;
+  const intlLocale = INTL_LOCALES[lang];
+  const price = (amount: number) => formatPrice(amount, region, intlLocale);
 
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(0, 0, 0, 0);
 
   const formatDate = (d: Date) =>
-    new Intl.DateTimeFormat(INTL_LOCALES[lang], {
+    new Intl.DateTimeFormat(intlLocale, {
       weekday: "short",
       day: "numeric",
       month: "short",
@@ -77,18 +125,20 @@ export function Booking() {
     }
   };
 
-  const pay = () => {
-    if (!name || !email || !cardName || !cardNumber || !expiry || !cvc) {
+  const confirmBooking = () => {
+    const detailsOk = name && email && (region === "br" ? cpf && country : true);
+    if (!detailsOk) {
       setError(b.fillAllFields);
       return;
     }
     setError("");
     setProcessing(true);
-    // Simulated payment — swap for a real provider (e.g. Stripe) in production.
+    // The booking request is simulated — payment arrives directly via PIX/IBAN
+    // and the confirmation email is sent once it is identified.
     setTimeout(() => {
       setProcessing(false);
       setStep("success");
-    }, 1600);
+    }, 1200);
   };
 
   const reset = () => {
@@ -97,10 +147,8 @@ export function Booking() {
     setTime("");
     setName("");
     setEmail("");
-    setCardName("");
-    setCardNumber("");
-    setExpiry("");
-    setCvc("");
+    setCpf("");
+    setCountry("");
     setError("");
   };
 
@@ -158,6 +206,7 @@ export function Booking() {
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             {(["single", "package"] as const).map((p) => {
               const info = b[p];
+              const planTotal = p === "single" ? sessionPrice : sessionPrice * PACKAGE_SESSIONS;
               return (
                 <div
                   key={p}
@@ -177,10 +226,10 @@ export function Booking() {
                   </h3>
                   <div className="mt-3 flex items-baseline gap-2">
                     <span className="font-display text-4xl font-semibold text-primary">
-                      {info.price}
+                      {price(planTotal)}
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      {p === "package" ? `€${SESSION_PRICE} ${b.perSession}` : b.perSession}
+                      {p === "package" ? `${price(sessionPrice)} ${b.perSession}` : b.perSession}
                     </span>
                   </div>
                   <p className="mt-3 text-sm text-muted-foreground">{info.description}</p>
@@ -320,6 +369,29 @@ export function Booking() {
                     placeholder={b.emailPlaceholder}
                   />
                 </div>
+                {region === "br" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="bk-cpf">{b.cpf}</Label>
+                      <Input
+                        id="bk-cpf"
+                        inputMode="numeric"
+                        value={cpf}
+                        onChange={(e) => setCpf(e.target.value)}
+                        placeholder={b.cpfPlaceholder}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="bk-country">{b.country}</Label>
+                      <Input
+                        id="bk-country"
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                        placeholder={b.countryPlaceholder}
+                      />
+                    </div>
+                  </>
+                )}
                 <div className="space-y-2 sm:col-span-2">
                   <Label>{b.sessionLanguage}</Label>
                   <Select value={sessionLang} onValueChange={setSessionLang}>
@@ -338,53 +410,58 @@ export function Booking() {
               </div>
 
               <h3 className="mt-8 flex items-center gap-2 font-semibold text-blue-deep">
-                <CreditCard className="size-5 text-primary" />
-                {b.payment}
+                {region === "br" ? (
+                  <QrCode className="size-5 text-primary" />
+                ) : (
+                  <Landmark className="size-5 text-primary" />
+                )}
+                {region === "br" ? b.pixTitle : b.transferTitle}
               </h3>
-              <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="bk-cardname">{b.cardName}</Label>
-                  <Input
-                    id="bk-cardname"
-                    value={cardName}
-                    onChange={(e) => setCardName(e.target.value)}
-                    placeholder="Maria Silva"
+              <p className="mt-2 text-sm text-muted-foreground">
+                {region === "br" ? b.pixInstructions : b.transferInstructions}
+              </p>
+
+              <div className="mt-5 space-y-3">
+                {region === "br" ? (
+                  <CopyField
+                    label={b.pixKeyLabel}
+                    value={SITE.payment.pixKey}
+                    copyLabel={b.copy}
+                    copiedLabel={b.copied}
                   />
-                </div>
-                <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="bk-cardnumber">{b.cardNumber}</Label>
-                  <Input
-                    id="bk-cardnumber"
-                    inputMode="numeric"
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    placeholder="1234 5678 9012 3456"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="bk-expiry">{b.expiry}</Label>
-                  <Input
-                    id="bk-expiry"
-                    value={expiry}
-                    onChange={(e) => setExpiry(e.target.value)}
-                    placeholder="MM/YY"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="bk-cvc">{b.cvc}</Label>
-                  <Input
-                    id="bk-cvc"
-                    inputMode="numeric"
-                    value={cvc}
-                    onChange={(e) => setCvc(e.target.value)}
-                    placeholder="123"
-                  />
+                ) : (
+                  <>
+                    <CopyField
+                      label={b.accountHolderLabel}
+                      value={SITE.payment.accountHolder}
+                      copyLabel={b.copy}
+                      copiedLabel={b.copied}
+                    />
+                    <CopyField
+                      label={b.ibanLabel}
+                      value={SITE.payment.iban}
+                      copyLabel={b.copy}
+                      copiedLabel={b.copied}
+                    />
+                    <CopyField
+                      label={b.bicLabel}
+                      value={SITE.payment.bic}
+                      copyLabel={b.copy}
+                      copiedLabel={b.copied}
+                    />
+                  </>
+                )}
+                <div className="flex items-center justify-between rounded-xl bg-blue-mist px-4 py-3">
+                  <p className="text-xs text-muted-foreground">{b.amountLabel}</p>
+                  <p className="font-display text-lg font-semibold text-blue-deep">
+                    {price(total)}
+                  </p>
                 </div>
               </div>
 
               {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
 
-              <div className="mt-8 flex items-center justify-between gap-4">
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
                 <Button
                   variant="ghost"
                   onClick={() => setStep("schedule")}
@@ -395,18 +472,15 @@ export function Booking() {
                   {b.back}
                 </Button>
                 <Button
-                  onClick={pay}
+                  onClick={confirmBooking}
                   disabled={processing}
                   size="lg"
                   className="rounded-full px-8"
                 >
-                  {processing ? b.processing : `${b.payNow} · €${total}`}
+                  {processing ? b.processing : b.confirmBooking}
                 </Button>
               </div>
-              <p className="mt-4 flex items-center justify-end gap-1.5 text-xs text-muted-foreground">
-                <Lock className="size-3.5" />
-                {b.securityNote}
-              </p>
+              <p className="mt-4 text-right text-xs text-muted-foreground">{b.paymentNote}</p>
             </div>
 
             <aside className="h-fit rounded-3xl bg-blue-deep p-6 text-white sm:p-8">
@@ -428,7 +502,7 @@ export function Booking() {
                 </div>
                 <div className="flex justify-between gap-4 border-t border-white/20 pt-4 text-base">
                   <dt>{b.total}</dt>
-                  <dd className="font-display text-2xl font-semibold">€{total}</dd>
+                  <dd className="font-display text-2xl font-semibold">{price(total)}</dd>
                 </div>
               </dl>
             </aside>
@@ -454,6 +528,9 @@ export function Booking() {
                   </p>
                 ))}
               </div>
+              <p className="mt-3 border-t border-border pt-3 font-semibold text-blue-deep">
+                {b.total}: {price(total)}
+              </p>
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground italic">{b.successDetail}</p>

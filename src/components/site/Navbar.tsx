@@ -21,6 +21,7 @@ export function Navbar() {
     { href: "#content", label: t.nav.content },
     { href: "#testimonials", label: t.nav.testimonials },
     { href: "#booking", label: t.nav.book },
+    { href: "#faq", label: t.nav.faq },
   ];
 
   const current = LANGS.find((l) => l.code === lang)!;
